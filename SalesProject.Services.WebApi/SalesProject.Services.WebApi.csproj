@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SalesProject.Application.DTO\SalesProject.Application.DTO.csproj" />
+    <ProjectReference Include="..\SalesProject.Application.Interface\SalesProject.Application.Interface.csproj" />
+    <ProjectReference Include="..\SalesProject.Application.Main\SalesProject.Application.Main.csproj" />
+    <ProjectReference Include="..\SalesProject.Domain.Core\SalesProject.Domain.Core.csproj" />
+    <ProjectReference Include="..\SalesProject.Domain.Interface\SalesProject.Domain.Interface.csproj" />
+    <ProjectReference Include="..\SalesProject.Infraestructure.Data\SalesProject.Infraestructure.Data.csproj" />
+    <ProjectReference Include="..\SalesProject.Infraestructure.Interface\SalesProject.Infraestructure.Interface.csproj" />
+    <ProjectReference Include="..\SalesProject.Infraestructure.Repository\SalesProject.Infraestructure.Repository.csproj" />
+    <ProjectReference Include="..\SalesProject.Transversal.Common\SalesProject.Transversal.Common.csproj" />
+    <ProjectReference Include="..\SalesProject.Transversal.Mapper\SalesProject.Transversal.Mapper.csproj" />
+  </ItemGroup>
+
+</Project>

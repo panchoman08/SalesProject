@@ -1,0 +1,24 @@
+﻿using SalesProject.Application.DTO.customer.category;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SalesProject.Application.DTO.customer.customer
+{
+    public class CustomerDTO
+    {
+        public int Id { get; set; }
+        public string Nit { get; set; }
+        public string Cui { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public decimal CreditLimit { get; set; }
+        public int CreditDays { get; set; }
+        public bool Defaulter { get; set; }
+        public CustomerCatDTO Category { get; set; }
+    }
+}
