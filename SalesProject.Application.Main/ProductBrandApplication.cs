@@ -25,8 +25,8 @@ namespace SalesProject.Application.Main
             var response = new Response<bool>();
             try
             {
-                var product = _mapper.Map<Product>(obj);
-                response.Data = await _productBrandDomain.InsertAsync(product);
+                var brand = _mapper.Map<Brand>(obj);
+                response.Data = await _productBrandDomain.InsertAsync(brand);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -39,13 +39,13 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
-        public async Task<Response<bool>> UpdateAsync(int id, ProductUpdateDTO obj)
+        public async Task<Response<bool>> UpdateAsync(int id, ProductBrandUpdateDTO obj)
         {
             var response = new Response<bool>();
             try
             {
-                var product = _mapper.Map<Product>(obj);
-                response.Data = await _productDomain.UpdateAsync(id, product);
+                var brand = _mapper.Map<Brand>(obj);
+                response.Data = await _productBrandDomain.UpdateAsync(id, brand);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -63,7 +63,7 @@ namespace SalesProject.Application.Main
             var response = new Response<bool>();
             try
             {
-                response.Data = await _productDomain.DeleteAsync(id);
+                response.Data = await _productBrandDomain.DeleteAsync(id);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -76,13 +76,13 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
-        public async Task<Response<ProductDTO>> GetByIdAsync(int id)
+        public async Task<Response<ProductBrandDTO>> GetByIdAsync(int id)
         {
-            var response = new Response<ProductDTO>();
+            var response = new Response<ProductBrandDTO>();
             try
             {
-                var product = await _productDomain.GetByIdAsync(id);
-                response.Data = _mapper.Map<ProductDTO>(product);
+                var brand = await _productBrandDomain.GetByIdAsync(id);
+                response.Data = _mapper.Map<ProductBrandDTO>(brand);
                 response.IsSuccess = true;
                 response.Message = "Consulta exitosa";
             }
@@ -92,13 +92,13 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
-        public async Task<Response<ProductDTO>> GetByNameAsync(string name)
+        public async Task<Response<ProductBrandDTO>> GetByNameAsync(string name)
         {
-            var response = new Response<ProductDTO>();
+            var response = new Response<ProductBrandDTO>();
             try
             {
-                var product = await _productDomain.GetByNameAsync(name);
-                response.Data = _mapper.Map<ProductDTO>(product);
+                var product = await _productBrandDomain.GetByNameAsync(name);
+                response.Data = _mapper.Map<ProductBrandDTO>(product);
                 response.IsSuccess = true;
                 response.Message = "Consulta exitosa.";
             }
@@ -108,13 +108,13 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
-        public async Task<Response<ProductDTO>> GetBySkuAsync(string sku)
+        public async Task<Response<IEnumerable<ProductBrandDTO>>> GetAllTthatContainsNameAsync(string name)
         {
-            var response = new Response<ProductDTO>();
+            var response = new Response<IEnumerable<ProductBrandDTO>>();
             try
             {
-                var product = await _productDomain.GetBySkuAsync(sku);
-                response.Data = _mapper.Map<ProductDTO>(product);
+                var brands = await _productBrandDomain.GetAllThatContainsNameAsync(name);
+                response.Data = _mapper.Map<IEnumerable<ProductBrandDTO>>(brands);
                 response.IsSuccess = true;
                 response.Message = "Consulta exitosa.";
             }
@@ -124,29 +124,13 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
-        public async Task<Response<IEnumerable<ProductDTO>>> GetAllTthatContainsNameAsync(string name)
+        public async Task<Response<IEnumerable<ProductBrandDTO>>> GetAllAsync()
         {
-            var response = new Response<IEnumerable<ProductDTO>>();
+            var response = new Response<IEnumerable<ProductBrandDTO>>();
             try
             {
-                var product = await _productDomain.GetAllThatContainsNameAsync(name);
-                response.Data = _mapper.Map<IEnumerable<ProductDTO>>(product);
-                response.IsSuccess = true;
-                response.Message = "Consulta exitosa.";
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-            }
-            return response;
-        }
-        public async Task<Response<IEnumerable<ProductDTO>>> GetAllAsync()
-        {
-            var response = new Response<IEnumerable<ProductDTO>>();
-            try
-            {
-                var product = await _productDomain.GetAllAsync();
-                response.Data = _mapper.Map<IEnumerable<ProductDTO>>(product);
+                var brands = await _productBrandDomain.GetAllAsync();
+                response.Data = _mapper.Map<IEnumerable<ProductBrandDTO>>(brands);
                 response.IsSuccess = true;
                 response.Message = "Consulta exitosa.";
             }

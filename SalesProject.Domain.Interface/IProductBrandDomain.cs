@@ -15,6 +15,7 @@ namespace SalesProject.Domain.Interface
         Task<bool> DeleteAsync(int id);
         Task<Brand> GetByIdAsync(int id);
         Task<Brand> GetByNameAsync(string name);
+        Task<IEnumerable<Brand>> GetAllThatContainsNameAsync(string name);
         Task<IQueryable<Brand>> GetAllAsync();
         #endregion
     }

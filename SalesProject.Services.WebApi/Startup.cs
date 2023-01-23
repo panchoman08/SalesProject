@@ -55,6 +55,10 @@ namespace SalesProject.Services.WebApi
             services.AddTransient<IProductDomain, ProductDomain>();
             services.AddTransient<IProductApplication, ProductApplication>();
 
+            services.AddTransient<IGenericRepository<Brand>, ProductBrandRepository>();
+            services.AddTransient<IProductBrandDomain, ProductBrandDomain>();
+            services.AddTransient<IProductBrandApplication, ProductBrandApplication>();
+
 
         }
 
