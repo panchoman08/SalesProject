@@ -36,10 +36,18 @@ namespace SalesProject.Domain.Core
             var queryable = await _genericProductBrandRepo.GetAllAsync();
             return await queryable.FirstOrDefaultAsync(x => x.Name == name);
         }
+
+        public async Task<IEnumerable<Brand>> GetAllThatContainsNameAsync(string name)
+        {
+            var queryable = await _genericProductBrandRepo.GetAllAsync();
+            return await queryable.Where(x => x.Name.Contains(name)).ToListAsync();
+        }
         public async Task<IQueryable<Brand>> GetAllAsync()
         {
             return await _genericProductBrandRepo.GetAllAsync();
         }
+
+        
         #endregion
     }
 }
