@@ -11,6 +11,8 @@ using SalesProject.Application.DTO.product.product;
 using SalesProject.Application.DTO.product.brand;
 using SalesProject.Application.DTO.product.measure;
 using SalesProject.Application.DTO.product.category;
+using SalesProject.Application.DTO.document.documentType;
+using SalesProject.Application.DTO.document.document;
 
 namespace SalesProject.Transversal.Mapper
 {
@@ -53,6 +55,14 @@ namespace SalesProject.Transversal.Mapper
             CreateMap<Measure, ProductMeasureDTO>();
             CreateMap<ProductMeasureCreateDTO, Measure>();
             CreateMap<ProductMeasureUpdateDTO, Measure>();
+
+            CreateMap<DocumentType, DocumentTypeDTO>();
+            CreateMap<DocumentTypeCreateDTO, DocumentType>();
+            CreateMap<DocumentTypeUpdateDTO, DocumentType>();
+
+            CreateMap<Document, DocumentDTO>();
+            CreateMap<DocumentCreateDTO, Document>();
+            CreateMap<DocumentUpdateDTO, Document>();
 
 
         }

@@ -20,6 +20,10 @@ namespace SalesProject.Domain.Core
         #region async methods
         public async Task<bool> InsertAsync(SupplierCat obj)
         {
+            if (await GetByNameAsync(obj.Name) != null)
+            {
+                throw new Exception("There is already a supplier category created with the same name.");
+            }
             return await _genericSupplierCatRepo.InsertAsync(obj);
         }
         public async Task<bool> UpdateAsync(int id, SupplierCat obj)

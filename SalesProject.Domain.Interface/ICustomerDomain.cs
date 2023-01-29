@@ -13,6 +13,8 @@ namespace SalesProject.Domain.Interface
         Task<Customer> GetByNameAsync(string name);
         Task<IEnumerable<Customer>> GetAllTthatContainsNameAsync(string name);
         Task<IQueryable<Customer>> GetAllAsync();
+
+        Task<bool> RegisterExists(Customer obj);
         #endregion
     }
 }

@@ -91,9 +91,16 @@ namespace SalesProject.Services.WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Update([FromRoute]int id, [FromBody]SupplierUpdateDTO supplier)
+        public async Task<ActionResult> Update([FromRoute]int id, [FromBody]SupplierUpdateDTO obj)
         {
-            var update = await _supplierApplication.UpdateAsync(id, supplier);
+            var supplier = await _supplierApplication.GetByIdAsync(id);
+
+            if (supplier.Data == null)
+            {
+                return NotFound(new ResponseError("The supplier id was not found."));
+            }
+
+            var update = await _supplierApplication.UpdateAsync(id, obj);
 
             if (!update.IsSuccess)
             {
@@ -106,6 +113,12 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Update([FromRoute] int id)
         {
+            var supplier = await _supplierApplication.GetByIdAsync(id);
+
+            if (supplier.Data == null)
+            {
+                return NotFound(new ResponseError("The supplier id was not found."));
+            }
             var update = await _supplierApplication.DeleteAsync(id);
 
             if (!update.IsSuccess)

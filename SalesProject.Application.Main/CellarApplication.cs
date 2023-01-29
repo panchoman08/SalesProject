@@ -28,7 +28,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro agregado correctamente";
+                    response.Message = "Register added successfully.";
                 }
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro actualizado correctamente";
+                    response.Message = "Register updated successfully.";
                 }
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro eliminado correctamente";
+                    response.Message = "Register deleted successfully.";
                 }
             }
             catch (Exception ex)
@@ -82,7 +82,7 @@ namespace SalesProject.Application.Main
                 var cellar = await _cellarDomain.GetByIdAsync(id);
                 response.Data = _mapper.Map<CellarDTO>(cellar);
                 response.IsSuccess = true;
-                response.Message = "Consulta exitosa.";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace SalesProject.Application.Main
                 var cellar = await _cellarDomain.GetByNameAsync(name);
                 response.Data = _mapper.Map<CellarDTO>(cellar);
                 response.IsSuccess= true;
-                response.Message = "Consulta exitosa.";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -115,7 +115,7 @@ namespace SalesProject.Application.Main
                 var cellars = await _cellarDomain.GetAllAsync();
                 response.Data = _mapper.Map<IEnumerable<CellarDTO>>(cellars);
                 response.IsSuccess= true;
-                response.Message = "Consulta exitosa";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {

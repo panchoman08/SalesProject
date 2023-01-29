@@ -30,7 +30,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro agregado correctamente.";
+                    response.Message = "Register added successfully.";
                 }
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro actualizado correctamente.";
+                    response.Message = "Register updated successfully.";
                 }
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro eliminado correctamente.";
+                    response.Message = "Register deleted successfully.";
                 }
             }
             catch (Exception ex)
@@ -84,7 +84,7 @@ namespace SalesProject.Application.Main
                 var brand = await _productBrandDomain.GetByIdAsync(id);
                 response.Data = _mapper.Map<ProductBrandDTO>(brand);
                 response.IsSuccess = true;
-                response.Message = "Consulta exitosa";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -100,7 +100,7 @@ namespace SalesProject.Application.Main
                 var product = await _productBrandDomain.GetByNameAsync(name);
                 response.Data = _mapper.Map<ProductBrandDTO>(product);
                 response.IsSuccess = true;
-                response.Message = "Consulta exitosa.";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace SalesProject.Application.Main
                 var brands = await _productBrandDomain.GetAllThatContainsNameAsync(name);
                 response.Data = _mapper.Map<IEnumerable<ProductBrandDTO>>(brands);
                 response.IsSuccess = true;
-                response.Message = "Consulta exitosa.";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -132,7 +132,7 @@ namespace SalesProject.Application.Main
                 var brands = await _productBrandDomain.GetAllAsync();
                 response.Data = _mapper.Map<IEnumerable<ProductBrandDTO>>(brands);
                 response.IsSuccess = true;
-                response.Message = "Consulta exitosa.";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {

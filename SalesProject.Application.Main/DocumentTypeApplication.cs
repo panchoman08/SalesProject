@@ -1,31 +1,35 @@
 ﻿using AutoMapper;
-using SalesProject.Application.DTO.supplier.category;
+using SalesProject.Application.DTO.document.documentType;
 using SalesProject.Application.Interface;
 using SalesProject.Domain.Entity.Models;
 using SalesProject.Domain.Interface;
 using SalesProject.Transversal.Common;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SalesProject.Application.Main
 {
-    public class SupplierCatApplication : ISupplierCatApplication
+    public class DocumentTypeApplication : IDocumentTypeApplication
     {
-        private readonly ISupplierCatDomain _supplierCatDomain;
+        private readonly IDocumentTypeDomain _documentTypeDomain;
         private readonly IMapper _mapper;
 
-        public SupplierCatApplication(ISupplierCatDomain supplierCatDomain, IMapper mapper)
+        public DocumentTypeApplication(IDocumentTypeDomain documentTypeDomain, IMapper mapper)
         {
-            _supplierCatDomain = supplierCatDomain;
+            _documentTypeDomain = documentTypeDomain;
             _mapper = mapper;
         }
 
-        public async Task<Response<bool>> InsertAsync(SupplierCatCreateDTO obj)
+        public async Task<Response<bool>> InsertAsync(DocumentTypeCreateDTO obj)
         {
             var response = new Response<bool>();
             try
             {
-                var supplier = _mapper.Map<SupplierCat>(obj);
-                response.Data = await _supplierCatDomain.InsertAsync(supplier);
+                var documentType = _mapper.Map<DocumentType>(obj);
+                response.Data = await _documentTypeDomain.InsertAsync(documentType);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -38,19 +42,19 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
-        public async Task<Response<bool>> UpdateAsync(int id, SupplierCatUpdateDTO obj)
+
+        public async Task<Response<bool>> UpdateAsync(int id, DocumentTypeUpdateDTO obj)
         {
             var response = new Response<bool>();
             try
             {
-                var category = _mapper.Map<SupplierCat>(obj);
-                response.Data = await _supplierCatDomain.UpdateAsync(id, category);
+                var documentType = _mapper.Map<DocumentType>(obj);
+                response.Data = await _documentTypeDomain.UpdateAsync(id, documentType);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
                     response.Message = "Register updated successfully.";
                 }
-
             }
             catch (Exception ex)
             {
@@ -63,44 +67,27 @@ namespace SalesProject.Application.Main
             var response = new Response<bool>();
             try
             {
-                response.Data = await _supplierCatDomain.DeleteAsync(id);
+                response.Data = await _documentTypeDomain.DeleteAsync(id);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
                     response.Message = "Register deleted successfully.";
                 }
             }
-            catch(Exception ex)
-            {
+            catch (Exception ex)
+            { 
                 response.Message = ex.Message;
             }
             return response;
         }
 
-        public async Task<Response<IEnumerable<SupplierCatDTO>>> GetAllAsync()
+        public async Task<Response<IEnumerable<DocumentTypeDTO>>> GetAllAsync()
         {
-            var response = new Response<IEnumerable<SupplierCatDTO>>();
+            var response = new Response<IEnumerable<DocumentTypeDTO>>();
             try
             {
-                var categories = await _supplierCatDomain.GetAllAsync();
-                response.Data = _mapper.Map<IEnumerable<SupplierCatDTO>>(categories);
-                response.IsSuccess = true;
-                response.Message = "Query successfully.";
-            }
-            catch (Exception ex)
-            {
-                response.Message = $"{ex.Message}";
-            }
-            return response;
-        }
-
-        public async Task<Response<IEnumerable<SupplierCatDTO>>> GetAllTthatContainsNameAsync(string name)
-        {
-            var response = new Response<IEnumerable<SupplierCatDTO>>();
-            try
-            {
-                var categories = await _supplierCatDomain.GetAllTthatContainsNameAsync(name);
-                response.Data = _mapper.Map<IEnumerable<SupplierCatDTO>>(categories);
+                var documentsType = await _documentTypeDomain.GetAllAsync();
+                response.Data = _mapper.Map<IEnumerable<DocumentTypeDTO>>(documentsType);
                 response.IsSuccess = true;
                 response.Message = "Query successfully.";
             }
@@ -111,30 +98,13 @@ namespace SalesProject.Application.Main
             return response;
         }
 
-        public async Task<Response<SupplierCatDTO>> GetByIdAsync(int id)
+        public async Task<Response<IEnumerable<DocumentTypeDTO>>> GetAllTthatContainsNameAsync(string name)
         {
-            var response = new Response<SupplierCatDTO>();
+            var response = new Response<IEnumerable<DocumentTypeDTO>>();
             try
             {
-                var category = await _supplierCatDomain.GetByIdAsync(id);
-                response.Data = _mapper.Map<SupplierCatDTO>(category);
-                response.IsSuccess= true;
-                response.Message = "Query successfully.";
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-            }
-            return response;
-        }
-
-        public async Task<Response<SupplierCatDTO>> GetByNameAsync(string name)
-        {
-            var response = new Response<SupplierCatDTO>();
-            try
-            {
-                var category = await _supplierCatDomain.GetByNameAsync(name);
-                response.Data = _mapper.Map<SupplierCatDTO>(category);
+                var documentsType = await _documentTypeDomain.GetAllTthatContainsNameAsync(name);
+                response.Data = _mapper.Map<IEnumerable<DocumentTypeDTO>>(documentsType);
                 response.IsSuccess = true;
                 response.Message = "Query successfully.";
             }
@@ -145,5 +115,40 @@ namespace SalesProject.Application.Main
             return response;
         }
 
+        public async Task<Response<DocumentTypeDTO>> GetByIdAsync(int id)
+        {
+            var response = new Response<DocumentTypeDTO>();
+            try
+            {
+                var documentType = await _documentTypeDomain.GetByIdAsync(id);
+                response.Data = _mapper.Map<DocumentTypeDTO>(documentType);
+                response.IsSuccess = true;
+                response.Message = "Query successfully.";
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<Response<DocumentTypeDTO>> GetByNameAsync(string name)
+        {
+            var response = new Response<DocumentTypeDTO>();
+            try
+            {
+                var documentType = await _documentTypeDomain.GetByNameAsync(name);
+                response.Data = _mapper.Map<DocumentTypeDTO>(documentType);
+                response.IsSuccess = true;
+                response.Message = "Query successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                throw;
+            }
+            return response;
+        }
     }
 }

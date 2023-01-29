@@ -81,6 +81,13 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Update([FromRoute]int id, [FromBody] CellarUpdateDTO obj)
         {
+            var cellar = await _cellarApplication.GetByIdAsync(id);
+
+            if (cellar.Data == null)
+            {
+                return NotFound(new ResponseError("The cellar id was not found."));
+            }
+
             var update = await _cellarApplication.UpdateAsync(id, obj);
 
             if (!update.IsSuccess)
@@ -94,6 +101,13 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
+            var cellar = await _cellarApplication.GetByIdAsync(id);
+
+            if (cellar.Data == null)
+            {
+                return NotFound(new ResponseError("The cellar id was not found."));
+            }
+
             var delete = await _cellarApplication.DeleteAsync(id);
 
             if (!delete.IsSuccess)

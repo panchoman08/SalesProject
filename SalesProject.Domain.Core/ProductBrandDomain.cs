@@ -17,6 +17,10 @@ namespace SalesProject.Domain.Core
         #region async methods
         public async Task<bool> InsertAsync(Brand obj)
         {
+            if (await GetByNameAsync(obj.Name) != null)
+            {
+                throw new Exception("There is already a product brand created with the same name.");
+            }
             return await _genericProductBrandRepo.InsertAsync(obj);
         }
         public async Task<bool> UpdateAsync(int id, Brand obj)

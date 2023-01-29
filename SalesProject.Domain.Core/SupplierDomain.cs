@@ -13,10 +13,13 @@ namespace SalesProject.Domain.Core
             _genericSupplierRepo = genericRepository;
         }
 
-
         #region async methods
         public async Task<bool> InsertAsync(Supplier obj)
         {
+            if (await RegisterExists(obj))
+            {
+                throw new Exception("There is already a suppplier created with the same NIT and name.");
+            }
             return await _genericSupplierRepo.InsertAsync(obj);
         }
 
@@ -49,6 +52,14 @@ namespace SalesProject.Domain.Core
         {
             var suppliers = await _genericSupplierRepo.GetAllAsync();
             return await suppliers.FirstOrDefaultAsync(x => x.Name == name);
+        }
+
+        public async Task<bool> RegisterExists(Supplier obj)
+        {
+            var queryable = await _genericSupplierRepo.GetAllAsync();
+            var exist = await queryable.AnyAsync(x => x.Nit == obj.Nit && x.Name == obj.Name);
+
+            return exist;
         }
         #endregion
     }

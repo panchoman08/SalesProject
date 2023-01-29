@@ -35,7 +35,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro agregado correctamente";
+                    response.Message = "Register added successfully.";
                 }
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro actualizado correctamente";
+                    response.Message = "Register updated successfully.";
                 }
             }
             catch (Exception ex)
@@ -73,7 +73,7 @@ namespace SalesProject.Application.Main
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Registro eliminado correctamente";
+                    response.Message = "Register deleted successfully.";
                 }
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace SalesProject.Application.Main
                 var customers = await _customerCatDomain.GetAllAsync();
                 response.Data = _mapper.Map<IEnumerable<CustomerCatDTO>>(customers);
                 response.IsSuccess = true;
-                response.Message = "Consulta Exitosa";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace SalesProject.Application.Main
                 var customers = await _customerCatDomain.GetAllTthatContainsNameAsync(name);
                 response.Data = _mapper.Map<IEnumerable<CustomerCatDTO>>(customers);
                 response.IsSuccess = true;
-                response.Message = "Consulta Exitosa";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -125,7 +125,7 @@ namespace SalesProject.Application.Main
                 var customer = await _customerCatDomain.GetByIdAsync(id);
                 response.Data = _mapper.Map<CustomerCatDTO>(customer);
                 response.IsSuccess = true;
-                response.Message = "Consulta Exitosa";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {
@@ -142,7 +142,7 @@ namespace SalesProject.Application.Main
                 var customer = await _customerCatDomain.GetByNameAsync(name);
                 response.Data = _mapper.Map<CustomerCatDTO>(customer);
                 response.IsSuccess = true;
-                response.Message = "Consulta Exitosa";
+                response.Message = "Query successfully.";
             }
             catch (Exception ex)
             {

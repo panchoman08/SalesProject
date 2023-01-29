@@ -16,15 +16,20 @@ namespace SalesProject.Domain.Core
 
         public async Task<bool> InsertAsync(Customer obj)
         {
-            /*var customerQuerying = await _genericCustomerRepo.GetAllAsync();
-            var customerByNitAndName = await customerQuerying.Where(x => x.Name.Equals(obj.Name) && x.Nit.Equals(obj.Nit)).ToListAsync();
-
-            if (customerByNitAndName.Count >  0)
+            if (await RegisterExists(obj))
             {
-                return false;
+                throw new Exception("There is already a customer created with the same nit and name.");
             }
-            */
+
             return await _genericCustomerRepo.InsertAsync(obj);
+        }
+
+        public async Task<bool> RegisterExists(Customer obj)
+        {
+            var queryable = await _genericCustomerRepo.GetAllAsync();
+            var exist = await queryable.AnyAsync(x => x.Nit == obj.Nit && x.Name == obj.Name);
+
+            return exist;
         }
         public async Task<bool> UpdateAsync(int id, Customer obj)
         {
@@ -61,5 +66,6 @@ namespace SalesProject.Domain.Core
             return customer;
         }
 
+        
     }
 }

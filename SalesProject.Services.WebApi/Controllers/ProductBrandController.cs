@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesProject.Application.DTO.product.brand;
 using SalesProject.Application.Interface;
+using SalesProject.Application.Main;
 using SalesProject.Transversal.Common;
 
 namespace SalesProject.Services.WebApi.Controllers
@@ -94,6 +95,13 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Update([FromRoute]int id,[FromBody] ProductBrandUpdateDTO obj)
         {
+            var productBrand = await _productBrandApplication.GetByIdAsync(id);
+
+            if (productBrand.Data == null)
+            {
+                return NotFound(new ResponseError("The product brand id was not found."));
+            }
+
             var update = await _productBrandApplication.UpdateAsync(id, obj);
 
             if (!update.IsSuccess)
@@ -105,8 +113,15 @@ namespace SalesProject.Services.WebApi.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Update([FromRoute] int id)
+        public async Task<ActionResult> Delete([FromRoute] int id)
         {
+            var productBrand = await _productBrandApplication.GetByIdAsync(id);
+
+            if (productBrand.Data == null)
+            {
+                return NotFound(new ResponseError("The product brand id was not found."));
+            }
+
             var delete = await _productBrandApplication.DeleteAsync(id);
 
             if (!delete.IsSuccess)

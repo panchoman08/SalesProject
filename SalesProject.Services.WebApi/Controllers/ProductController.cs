@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesProject.Application.DTO.product.product;
 using SalesProject.Application.Interface;
+using SalesProject.Application.Main;
 using SalesProject.Transversal.Common;
 
 namespace SalesProject.Services.WebApi.Controllers
@@ -81,13 +82,6 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]ProductCreateDTO product)
         {
-            var productBySku = await _productApplication.GetBySkuAsync(product.Sku);
-
-            if (productBySku.Data != null)
-            {
-                return BadRequest(new ResponseError($"There is already a product created with de sku: {product.Sku}"));
-            }
-
             var insert = await _productApplication.InsertAsync(product);
 
             if (!insert.IsSuccess)
@@ -99,9 +93,16 @@ namespace SalesProject.Services.WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Update([FromRoute]int id, [FromBody] ProductUpdateDTO product)
+        public async Task<ActionResult> Update([FromRoute]int id, [FromBody] ProductUpdateDTO obj)
         {
-            var insert = await _productApplication.UpdateAsync(id, product);
+            var product = await _productApplication.GetByIdAsync(id);
+
+            if (product.Data == null)
+            {
+                return NotFound(new ResponseError("The product id was not found."));
+            }
+
+            var insert = await _productApplication.UpdateAsync(id, obj);
 
             if (!insert.IsSuccess)
             {
@@ -125,7 +126,7 @@ namespace SalesProject.Services.WebApi.Controllers
 
             if (!delete.IsSuccess)
             {
-                return BadRequest(new ResponseError($"T"));
+                return BadRequest(new ResponseError($"{delete.Message}"));
             }
 
             return Ok();

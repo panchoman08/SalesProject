@@ -59,6 +59,13 @@ namespace SalesProject.Services.WebApi
             services.AddTransient<IProductBrandDomain, ProductBrandDomain>();
             services.AddTransient<IProductBrandApplication, ProductBrandApplication>();
 
+            services.AddTransient<IGenericRepository<DocumentType>, DocumentTypeRepository>();
+            services.AddTransient<IDocumentTypeDomain, DocumentTypeDomain>();
+            services.AddTransient<IDocumentTypeApplication, DocumentTypeApplication>();
+
+            services.AddTransient<IGenericRepository<Document>, DocumentRepository>();
+            services.AddTransient<IDocumentDomain, DocumentDomain>();
+            services.AddTransient<IDocumentApplication, DocumentApplication>();
 
         }
 

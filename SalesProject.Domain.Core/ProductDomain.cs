@@ -17,7 +17,10 @@ namespace SalesProject.Domain.Core
         #region async methods
         public async Task<bool> InsertAsync(Product obj)
         {
-           // cambios en la rama de desarrollo
+            if (await GetBySkuAsync(obj.Sku) != null)
+            {
+                throw new Exception("There is already a product created with the same SKU.");
+            }
             return await _genericProductRepo.InsertAsync(obj);
         }
         public async Task<bool> UpdateAsync(int id, Product obj)

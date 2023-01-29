@@ -15,6 +15,10 @@ namespace SalesProject.Domain.Core
         #region async methods
         public async Task<bool> InsertAsync(Cellar obj)
         {
+            if (await GetByNameAsync(obj.Name) != null)
+            {
+                throw new Exception("There is already a cellar created with the same name.");
+            }
             return await _genericCellarRepo.InsertAsync(obj);
         }
         public async Task<bool> UpdateAsync(int id, Cellar obj)

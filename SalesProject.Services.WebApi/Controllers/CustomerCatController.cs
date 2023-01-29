@@ -81,14 +81,6 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Insert([FromBody]CustomerCatCreateDTO customerCat)
         {
-            var categories = await _customerCatApplication.GetAllAsync();
-            var existCategory = categories.Data.FirstOrDefault(x => x.Name == customerCat.Name);
-
-            if (existCategory != null)
-            {
-                return BadRequest(new ResponseError($"The category name -> {customerCat.Name} is already register"));
-            }
-
             var insert = await _customerCatApplication.InsertAsync(customerCat);
 
             if (!insert.IsSuccess)

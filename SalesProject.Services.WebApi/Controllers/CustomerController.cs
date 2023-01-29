@@ -83,14 +83,6 @@ namespace SalesProject.Services.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]CustomerCreateDTO customer)
         {
-            var customers = await _customerApplication.GetAllAsync();
-            var customerByNitAndName = customers.Data.Where(x => x.Name == customer.Name && x.Nit == customer.Nit);
-
-            if (customerByNitAndName.Count() > 0)
-            {
-                return BadRequest(new ResponseError($"There is already an customer register with the same NIT and Name"));
-            }
-
             var insert = await _customerApplication.InsertAsync(customer);
 
             if (!insert.IsSuccess)
