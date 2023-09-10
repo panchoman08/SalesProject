@@ -19,7 +19,7 @@ namespace SalesProject.Domain.Core
         {
             if (await GetByNameAsync(obj.Name) != null)
             {
-                throw new Exception("There is already a customer category createds with the same name.");
+                throw new Exception("There is already a customer category created with the same name.");
             }
             return await _genericCustomerCatRepo.InsertAsync(obj);
         }

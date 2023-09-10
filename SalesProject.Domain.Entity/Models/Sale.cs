@@ -17,17 +17,17 @@ public partial class Sale
 
     public int? SaleOrderId { get; set; }
 
-    public string? NoDoc { get; set; }
+    public string NoDoc { get; set; }
 
-    public string? Serie { get; set; }
+    public string Serie { get; set; }
 
     public bool? Credit { get; set; }
 
     public int? CreditDays { get; set; }
 
-    public DateTime? DateTrans { get; set; }
+    public DateTime DateTrans { get; set; }
 
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     public decimal? Subtotal { get; set; }
 
@@ -35,21 +35,19 @@ public partial class Sale
 
     public decimal? Total { get; set; }
 
-    public virtual Customer Customer { get; set; } = null!;
+    public virtual Customer Customer { get; set; }
 
-    public virtual Document Document { get; set; } = null!;
+    public virtual Document Document { get; set; }
 
-    public virtual ICollection<Inventory> Inventories { get; } = new List<Inventory>();
+    public virtual ICollection<SaleDet> SaleDets { get; set; } = new List<SaleDet>();
 
-    public virtual ICollection<SaleDet> SaleDets { get; } = new List<SaleDet>();
-
-    public virtual SaleOrder? SaleOrder { get; set; }
+    public virtual SaleOrder SaleOrder { get; set; }
 
     public virtual ICollection<SaleReturnDet> SaleReturnDets { get; } = new List<SaleReturnDet>();
 
-    public virtual TransactionState TransState { get; set; } = null!;
+    public virtual TransactionState TransState { get; set; }
 
     public virtual ICollection<TransactionDetail> TransactionDetails { get; } = new List<TransactionDetail>();
 
-    public virtual UserSy User { get; set; } = null!;
+    public virtual UserSy User { get; set; }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.product.product;
 using SalesProject.Application.Interface;
 using SalesProject.Application.Main;
@@ -53,7 +55,7 @@ namespace SalesProject.Services.WebApi.Controllers
             return Ok(product.Data);
         }
 
-        [HttpGet("thatContainsName/{name}")]
+        [HttpGet("allThatContainsName/{name}")]
         public async Task<ActionResult<List<ProductDTO>>> GetAllThatContainsName([FromRoute] string name)
         {
             var product = await _productApplication.GetAllTthatContainsNameAsync(name);
@@ -66,8 +68,21 @@ namespace SalesProject.Services.WebApi.Controllers
             return Ok(product.Data);
         }
 
+        [HttpGet("allThatContainsSku/{sku}")]
+        public async Task<ActionResult<List<ProductDTO>>> GetAllThatContainsSku([FromRoute]string sku)
+        {
+            var products = await _productApplication.GetAllThatContainsSkuAsync(sku);
+
+            if (!products.IsSuccess)
+            {
+                return BadRequest(new ResponseError(products.Message));
+            }
+
+            return Ok(products.Data);
+        }
+
         [HttpGet("all")]
-        public async Task<ActionResult<List<ProductDTO>>> GetAllThatContainsName()
+        public async Task<ActionResult<List<ProductDTO>>> GetAll()
         {
             var product = await _productApplication.GetAllAsync();
 
@@ -77,6 +92,30 @@ namespace SalesProject.Services.WebApi.Controllers
             }
 
             return Ok(product.Data);
+        }
+
+        [HttpGet("allWithPaging")]
+        public async Task<ActionResult> GetAllWithPaging([FromQuery] PaginationParametersDTO paginationParametersDTO)
+        {
+            var products = await _productApplication.GetAllWithPagingAsync(paginationParametersDTO);
+
+            if (!products.IsSuccess)
+            {
+                return BadRequest(new ResponseError(products.Message));
+            }
+
+            var metadata = new
+            {
+                products.Data.TotalCount,
+                products.Data.PageSize,
+                products.Data.CurrentPage,
+                products.Data.HasNext,
+                products.Data.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            return Ok(products.Data);
         }
 
         [HttpPost]
@@ -119,7 +158,7 @@ namespace SalesProject.Services.WebApi.Controllers
 
             if (product.Data == null)
             {
-                return NotFound("The product id was not found.");
+                return NotFound(new ResponseError("The product id was not found."));
             }
 
             var delete = await _productApplication.DeleteAsync(id);

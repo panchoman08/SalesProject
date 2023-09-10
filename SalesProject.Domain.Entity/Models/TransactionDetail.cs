@@ -27,19 +27,19 @@ public partial class TransactionDetail
 
     public decimal? Value { get; set; }
 
-    public int? NoDoc { get; set; }
+    public string NoDoc { get; set; }
 
-    public virtual Buy? Buy { get; set; }
+    public virtual Buy Buy { get; set; }
 
-    public virtual BuyReturn? BuyReturn { get; set; }
+    public virtual BuyReturn BuyReturn { get; set; }
 
-    public virtual Cellar? Cellar { get; set; }
+    public virtual Cellar Cellar { get; set; }
 
-    public virtual CellarTransfer? CellarTransfer { get; set; }
+    public virtual CellarTransfer CellarTransfer { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public virtual Product Product { get; set; }
 
-    public virtual Sale? Sale { get; set; }
+    public virtual Sale Sale { get; set; }
 
-    public virtual SaleReturn? SaleReturn { get; set; }
+    public virtual SaleReturn SaleReturn { get; set; }
 }

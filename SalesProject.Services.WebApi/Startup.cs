@@ -59,6 +59,18 @@ namespace SalesProject.Services.WebApi
             services.AddTransient<IProductBrandDomain, ProductBrandDomain>();
             services.AddTransient<IProductBrandApplication, ProductBrandApplication>();
 
+            services.AddTransient<IGenericRepository<ProductCat>, ProductCategoryRepository>();
+            services.AddTransient<IProductCategoryDomain, ProductCategoryDomain>();
+            services.AddTransient<IProductCategoryApplication, ProductCategoryApplication>();
+
+            services.AddTransient<IGenericRepository<Measure>, ProductMeasureRepository>();
+            services.AddTransient<IProductMeasureDomain, ProductMeasureDomain>();
+            services.AddTransient<IProductMeasureApplication, ProductMeasureApplication>();
+
+            services.AddTransient<IGenericRepository<MinMaxProd>, MinMaxProductUnitsRepository>();
+            services.AddTransient<IMinMaxProductUnitsDomain, MinMaxProductUnitsDomain>();
+            services.AddTransient<IMinMaxProductUnitsApplication, MinMaxProductUnitsApplication>();
+
             services.AddTransient<IGenericRepository<DocumentType>, DocumentTypeRepository>();
             services.AddTransient<IDocumentTypeDomain, DocumentTypeDomain>();
             services.AddTransient<IDocumentTypeApplication, DocumentTypeApplication>();
@@ -66,6 +78,42 @@ namespace SalesProject.Services.WebApi
             services.AddTransient<IGenericRepository<Document>, DocumentRepository>();
             services.AddTransient<IDocumentDomain, DocumentDomain>();
             services.AddTransient<IDocumentApplication, DocumentApplication>();
+
+            services.AddTransient<IGenericRepository<CategorySalePrice>, SalePriceCategoryRepository>();
+            services.AddTransient<ISalePriceCategoryDomain, SalePriceCategoryDomain>();
+            services.AddTransient<ISalePriceCategoryApplication, SalePriceCatApplication>();
+
+            services.AddTransient<IGenericRepository<BuyOrder>, BuyOrderRepository>();
+            services.AddTransient<IBuyOrderDomain, BuyOrderDomain>();
+            services.AddTransient<IBuyOrderApplication, BuyOrderApplication>();
+
+            services.AddTransient<IGenericRepository<Buy>, BuyRepisotory>();
+            services.AddTransient<IBuyDomain, BuyDomain>();
+            services.AddTransient<IBuyApplication, BuyApplication>();
+
+            services.AddTransient<IGenericRepository<SaleOrder>, SaleOrderRepository>();
+            services.AddTransient<ISaleOrderDomain, SaleOrderDomain>();
+            services.AddTransient<ISaleOrderApplication, SaleOrderApplication>();
+
+            services.AddTransient<IGenericRepository<Sale>, SaleRepository>();
+            services.AddTransient<ISaleDomain, SaleDomain>();
+            services.AddTransient<ISaleApplication, SaleApplication>();
+
+            services.AddTransient<IGenericRepository<BuyReturn>, BuyReturnRepository>();
+            services.AddTransient<IBuyReturnDomain, BuyReturnDomain>();
+            services.AddTransient<IBuyReturnApplication, BuyReturnApplication>();
+
+            services.AddTransient<IGenericRepository<SaleReturn>, SaleReturnRepository>();
+            services.AddTransient<ISaleReturnDomain, SaleReturnDomain>();
+            services.AddTransient<ISaleReturnApplication, SaleReturnApplication>();
+
+            services.AddTransient<IGenericRepository<CellarTransfer>, CellarTransferRepository>();
+            services.AddTransient<ICellarTransferDomain, CellarTransferDomain>();
+            services.AddTransient<ICellarTransferApplication, CellarTransferApplication>();
+
+            
+
+
 
         }
 

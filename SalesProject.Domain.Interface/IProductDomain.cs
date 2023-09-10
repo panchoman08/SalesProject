@@ -17,7 +17,9 @@ namespace SalesProject.Domain.Interface
         Task<Product> GetBySkuAsync(string sku);
         Task<Product> GetByNameAsync(string name);
         Task<IEnumerable<Product>> GetAllThatContainsNameAsync(string name);
+        Task<IEnumerable<Product>> GetAllThatContainsSkuAsync(string sku);
         Task<IQueryable<Product>> GetAllAsync();
+        Task<IQueryable<Product>> GetAllWithPagingAsync();
         #endregion
     }
 }

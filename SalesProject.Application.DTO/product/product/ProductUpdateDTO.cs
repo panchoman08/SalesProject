@@ -16,8 +16,8 @@ namespace SalesProject.Application.DTO.product.product
         public string Description { get; set; }
         public decimal BuyPrice { get; set; }
         public int StatusId { get; set; }
-        public int Category { get; set; }
-        public int Measure { get; set; }
-        public int Brand { get; set; }
+        public int CategoryId { get; set; }
+        public int MeasureId { get; set; }
+        public int BrandId { get; set; }
     }
 }

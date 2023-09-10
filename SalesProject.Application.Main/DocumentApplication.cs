@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SalesProject.Application.DTO.document.document;
 using SalesProject.Application.DTO.document.documentType;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.Interface;
 using SalesProject.Domain.Entity.Models;
 using SalesProject.Domain.Interface;
@@ -93,6 +95,25 @@ namespace SalesProject.Application.Main
             }
             return response;
         }
+        public async Task<Response<PagedList<DocumentDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParametersDTO)
+        {
+            var response = new Response<PagedList<DocumentDTO>>();
+            try
+            {
+                var documents = await _documentDomain.GetAllWithPagingAsync();
+                IEnumerable<DocumentDTO> documentIE = _mapper.Map<IEnumerable<DocumentDTO>>(await documents.ToListAsync());
+
+                response.Data = PagedList<DocumentDTO>.ToPagedList(documentIE, paginationParametersDTO.PageNumber, paginationParametersDTO.PageSize);
+                response.IsSuccess = true;
+                response.Message = "Query successfully";
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"{ex.Message} \n {ex.InnerException}";
+            }
+
+            return response;
+        }
 
         public async Task<Response<IEnumerable<DocumentDTO>>> GetAllTthatContainsNameAsync(string name)
         {
@@ -142,7 +163,26 @@ namespace SalesProject.Application.Main
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                throw;
+            }
+            return response;
+        }
+
+        public async Task<Response<List<DocumentDTO>>> GetAllByDocumentTypeAsync(string name)
+        {
+            var response = new Response<List<DocumentDTO>>();
+            try
+            {
+                var documents = await _documentDomain.GetAllByDocumentTypeAsync(name);
+                response.Data = _mapper.Map<List<DocumentDTO>>(documents);
+                if (response.Data != null)
+                {
+                    response.IsSuccess  = true;
+                    response.Message = "Query successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
             }
             return response;
         }

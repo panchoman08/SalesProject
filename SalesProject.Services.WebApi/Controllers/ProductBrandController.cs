@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.product.brand;
 using SalesProject.Application.Interface;
 using SalesProject.Application.Main;
@@ -77,6 +79,30 @@ namespace SalesProject.Services.WebApi.Controllers
             }
 
             return Ok(brands.Data);
+        }
+
+        [HttpGet("allWithPaging")]
+        public async Task<ActionResult<PagedList<ProductBrandDTO>>> GetAllWithPaging([FromQuery] PaginationParametersDTO paginationParametersDTO)
+        {
+            var productBrands = await _productBrandApplication.GetAllWithPagingAsync(paginationParametersDTO);
+
+            if (!productBrands.IsSuccess)
+            {
+                return BadRequest(new ResponseError(productBrands.Message));
+            }
+
+            var metadata = new
+            {
+                productBrands.Data.TotalCount,
+                productBrands.Data.PageSize,
+                productBrands.Data.CurrentPage,
+                productBrands.Data.HasNext,
+                productBrands.Data.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            return Ok(productBrands.Data);
         }
 
         [HttpPost]

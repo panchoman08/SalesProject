@@ -15,8 +15,10 @@ namespace SalesProject.Domain.Interface
         Task<bool> DeleteAsync(int id);
         Task<Document> GetByIdAsync(int id);
         Task<Document> GetByNameAsync(string name);
+        Task<List<Document>> GetAllByDocumentTypeAsync(string name);
         Task<IEnumerable<Document>> GetAllTthatContainsNameAsync(string name);
         Task<IQueryable<Document>> GetAllAsync();
+        Task<IQueryable<Document>> GetAllWithPagingAsync();
         Task<bool> RegisterExists(Document obj);
         #endregion
     }

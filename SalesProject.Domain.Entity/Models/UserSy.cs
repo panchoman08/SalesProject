@@ -7,9 +7,9 @@ public partial class UserSy
 {
     public int Id { get; set; }
 
-    public string? Username { get; set; }
+    public string Username { get; set; }
 
-    public string? Password { get; set; }
+    public string Password { get; set; }
 
     public int? RolId { get; set; }
 
@@ -21,7 +21,7 @@ public partial class UserSy
 
     public virtual ICollection<CellarTransfer> CellarTransfers { get; } = new List<CellarTransfer>();
 
-    public virtual RolUser? Rol { get; set; }
+    public virtual RolUser Rol { get; set; }
 
     public virtual ICollection<SaleOrder> SaleOrders { get; } = new List<SaleOrder>();
 

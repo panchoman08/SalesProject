@@ -36,6 +36,10 @@ namespace SalesProject.Domain.Core
         {
             return _genericSupplierRepo.GetAllAsync();
         }
+        public Task<IQueryable<Supplier>> GetAllWithPagingAsync()
+        {
+            return _genericSupplierRepo.GetAllAsync();
+        }
 
         public async Task<IEnumerable<Supplier>> GetAllTthatContainsNameAsync(string name)
         {
@@ -61,6 +65,13 @@ namespace SalesProject.Domain.Core
 
             return exist;
         }
+
+        public async Task<IEnumerable<Supplier>> GetAllThatContainsNitAsync(string nit)
+        {
+            var suppliers = await _genericSupplierRepo.GetAllAsync();
+            return await suppliers.Where(x => x.Nit.Contains(nit)).ToListAsync();
+        }
+
         #endregion
     }
 }

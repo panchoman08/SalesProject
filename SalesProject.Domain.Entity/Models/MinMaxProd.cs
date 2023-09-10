@@ -15,7 +15,7 @@ public partial class MinMaxProd
 
     public int Maximum { get; set; }
 
-    public virtual Cellar Cellar { get; set; } = null!;
+    public virtual Cellar Cellar { get; set; }
 
-    public virtual Product Product { get; set; } = null!;
+    public virtual Product Product { get; set; }
 }

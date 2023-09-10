@@ -23,10 +23,20 @@ namespace SalesProject.Infraestructure.Repository
         }
         public async Task<bool> UpdateAsync(int id, Product obj)
         {
-            var update = _context.Update(obj);
-            await _context.SaveChangesAsync();
+            var product = await _context.Products.SingleOrDefaultAsync(x => x.Id == id);
 
-            return update != null;
+            product.Sku = obj.Sku;
+            product.Name = obj.Name;
+            product.Description = obj.Description;
+            product.BuyPrice = obj.BuyPrice;
+            product.CategoryId = obj.CategoryId;
+            product.MeasureId = obj.MeasureId;
+            product.BrandId = obj.BrandId;
+            product.StatusId = obj.StatusId;
+
+            var save = await _context.SaveChangesAsync();
+
+            return save > 0;
         }
         public async Task<bool> DeleteAsync(int id)
         {

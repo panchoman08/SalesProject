@@ -1,5 +1,6 @@
 ﻿using SalesProject.Domain.Entity;
 using SalesProject.Domain.Entity.Models;
+using SalesProject.Domain.Entity.Models.pagination;
 
 namespace SalesProject.Domain.Interface
 {
@@ -13,6 +14,7 @@ namespace SalesProject.Domain.Interface
         Task<Customer> GetByNameAsync(string name);
         Task<IEnumerable<Customer>> GetAllTthatContainsNameAsync(string name);
         Task<IQueryable<Customer>> GetAllAsync();
+        Task<IQueryable<Customer>> GetAllWithPagingAsync();
 
         Task<bool> RegisterExists(Customer obj);
         #endregion

@@ -26,7 +26,12 @@ namespace SalesProject.Infraestructure.Repository
         }
         public async Task<bool> UpdateAsync(int id, Cellar obj)
         {
-            var update = _context.Update(obj);
+            var cellar = await _context.Cellars.FirstOrDefaultAsync(x => x.Id == id);
+
+            cellar.Name = obj.Name;
+            cellar.Address = obj.Address;
+
+            var update = _context.Cellars.Update(cellar);
             await _context.SaveChangesAsync();
 
             return update != null;

@@ -11,21 +11,9 @@ public partial class Inventory
 
     public int CellarId { get; set; }
 
-    public int? BuyId { get; set; }
-
-    public int? SaleId { get; set; }
-
-    public int? CellarTransId { get; set; }
-
     public int? Units { get; set; }
 
-    public virtual Buy? Buy { get; set; }
+    public virtual Cellar Cellar { get; set; }
 
-    public virtual Cellar Cellar { get; set; } = null!;
-
-    public virtual CellarTransfer? CellarTrans { get; set; }
-
-    public virtual Product Product { get; set; } = null!;
-
-    public virtual Sale? Sale { get; set; }
+    public virtual Product Product { get; set; }
 }

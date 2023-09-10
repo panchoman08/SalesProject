@@ -4,6 +4,9 @@ using SalesProject.Transversal.Common;
 using AutoMapper;
 using SalesProject.Domain.Entity.Models;
 using SalesProject.Application.DTO.customer.customer;
+using SalesProject.Application.DTO.pagination;
+using SalesProject.Domain.Entity.Models.pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesProject.Application.Main
 {
@@ -93,6 +96,26 @@ namespace SalesProject.Application.Main
             return response;
         }
 
+        public async Task<Response<PagedList<CustomerDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParameters)
+        {
+            var response = new Response<PagedList<CustomerDTO>>();
+            try
+            {
+                var customers = await _customerDomain.GetAllWithPagingAsync();
+                IEnumerable<CustomerDTO> customersIE = _mapper.Map<IEnumerable<CustomerDTO>>(await customers.ToListAsync());
+
+                response.Data = PagedList<CustomerDTO>.ToPagedList(customersIE, paginationParameters.PageNumber, paginationParameters.PageSize);
+                response.IsSuccess = true;
+                response.Message = "Query successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"{ex.Message} \n {ex.InnerException}";
+            }
+
+            return response;
+        }
+
         public async Task<Response<IEnumerable<CustomerDTO>>> GetAllTthatContainsNameAsync(string name)
         {
             var response = new Response<IEnumerable<CustomerDTO>>();
@@ -144,5 +167,6 @@ namespace SalesProject.Application.Main
             return response;
         }
 
+        
     }
 }

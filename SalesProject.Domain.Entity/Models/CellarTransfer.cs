@@ -7,27 +7,23 @@ public partial class CellarTransfer
 {
     public int Id { get; set; }
 
+    public int DocumentId { get; set; }
+
     public int UserId { get; set; }
 
-    public string NoTransfer { get; set; } = null!;
+    public string NoTransfer { get; set; }
 
-    public int CellarOriginId { get; set; }
-
-    public int CellarDestinationId { get; set; }
-
-    public DateTime? DateTrans { get; set; }
+    public DateTime DateTrans { get; set; }
 
     public DateTime? Date { get; set; }
 
-    public virtual Cellar CellarDestination { get; set; } = null!;
-
-    public virtual Cellar CellarOrigin { get; set; } = null!;
+    public string Observation { get; set; }
 
     public virtual ICollection<CellarTransferDet> CellarTransferDets { get; } = new List<CellarTransferDet>();
 
-    public virtual ICollection<Inventory> Inventories { get; } = new List<Inventory>();
+    public virtual Document Document { get; set; }
 
     public virtual ICollection<TransactionDetail> TransactionDetails { get; } = new List<TransactionDetail>();
 
-    public virtual UserSy User { get; set; } = null!;
+    public virtual UserSy User { get; set; }
 }

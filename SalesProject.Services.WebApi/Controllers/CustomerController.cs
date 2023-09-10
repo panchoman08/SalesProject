@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SalesProject.Application.DTO.customer.customer;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.Interface;
+using SalesProject.Domain.Entity.Models;
 using SalesProject.Transversal.Common;
 
 namespace SalesProject.Services.WebApi.Controllers
@@ -67,6 +70,30 @@ namespace SalesProject.Services.WebApi.Controllers
             return Ok(customers.Data);
         }
 
+        [HttpGet("allWithPaging")]
+        public async Task<ActionResult<PagedList<CustomerDTO>>> GetAllWithPagination([FromQuery] PaginationParametersDTO paginationParametersDTO)
+        {
+            var customers = await _customerApplication.GetAllWithPagingAsync(paginationParametersDTO);
+
+            if (!customers.IsSuccess)
+            {
+                return BadRequest(new ResponseError(customers.Message));
+            }
+
+            var metadata = new
+            {
+                customers.Data.TotalCount,
+                customers.Data.PageSize,
+                customers.Data.CurrentPage,
+                customers.Data.HasNext,
+                customers.Data.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            return Ok(customers.Data);
+        }
+
         [HttpGet("allThatContainsName/{name}")]
         public async Task<ActionResult<List<CustomerDTO>>> GetAllThatContainsName([FromRoute]string name)
         {
@@ -87,7 +114,7 @@ namespace SalesProject.Services.WebApi.Controllers
 
             if (!insert.IsSuccess)
             {
-                return BadRequest($"{insert.Message}");
+                return BadRequest(new ResponseError($"{insert.Message}"));
             }
 
             return Ok();

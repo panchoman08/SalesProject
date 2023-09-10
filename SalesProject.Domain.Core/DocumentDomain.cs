@@ -43,6 +43,11 @@ namespace SalesProject.Domain.Core
             return await _genericDocumentRepo.GetAllAsync();
         }
 
+        public async Task<IQueryable<Document>> GetAllWithPagingAsync()
+        {
+            return await _genericDocumentRepo.GetAllAsync();
+        }
+
         public async Task<IEnumerable<Document>> GetAllTthatContainsNameAsync(string name)
         {
             var customerQueryable = await _genericDocumentRepo.GetAllAsync();
@@ -71,6 +76,12 @@ namespace SalesProject.Domain.Core
             var exist = await queryable.AnyAsync(x => x.DocumentTypeId == obj.DocumentTypeId &&
                                                 x.Description == obj.Description && x.Serie == obj.Serie);
             return exist;
+        }
+
+        public async Task<List<Document>> GetAllByDocumentTypeAsync(string name)
+        {
+            var queryable = await _genericDocumentRepo.GetAllAsync();
+            return await queryable.Where(x => x.DocumentType.Description == name).ToListAsync();
         }
     }
 }

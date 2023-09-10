@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SalesProject.Infraestructure.Interface": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:54461;http://localhost:54464"
+    }
+  }
+}

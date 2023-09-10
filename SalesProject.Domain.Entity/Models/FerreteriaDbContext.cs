@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using SalesProject.Domain.Entity.Models.custom;
 
 namespace SalesProject.Domain.Entity.Models;
 
@@ -14,6 +15,10 @@ public partial class FerreteriaDbContext : DbContext
         : base(options)
     {
     }
+
+    #region Custom DBSet
+    public virtual DbSet<SPCRUD> SPCRUDs { get; set; }
+    #endregion
 
     public virtual DbSet<Brand> Brands { get; set; }
 
@@ -81,11 +86,13 @@ public partial class FerreteriaDbContext : DbContext
 
     public virtual DbSet<TransactionState> TransactionStates { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
     public virtual DbSet<UserSy> UserSys { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP\\SQLEXPRESS;Database=ferreteria_db;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP\\SQLEXPRESS; Database=ferreteria_db; Trusted_Connection=True; TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -123,10 +130,12 @@ public partial class FerreteriaDbContext : DbContext
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("iva");
             entity.Property(e => e.NoDoc)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("no_doc");
             entity.Property(e => e.Serie)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("serie");
@@ -177,10 +186,18 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Discount)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("discount");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
             entity.Property(e => e.Price)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("sku");
             entity.Property(e => e.Subtotal)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("subtotal");
@@ -189,16 +206,7 @@ public partial class FerreteriaDbContext : DbContext
             entity.HasOne(d => d.Buy).WithMany(p => p.BuyDets)
                 .HasForeignKey(d => d.BuyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_buy_id");
-
-            entity.HasOne(d => d.Cellar).WithMany(p => p.BuyDets)
-                .HasForeignKey(d => d.CellarId)
-                .HasConstraintName("fk_buy_cellar_id");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.BuyDets)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_buy_product_id");
+                .HasConstraintName("FK_buy_det_buy_id");
         });
 
         modelBuilder.Entity<BuyOrder>(entity =>
@@ -221,11 +229,13 @@ public partial class FerreteriaDbContext : DbContext
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("iva");
             entity.Property(e => e.NoDoc)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("no_doc");
             entity.Property(e => e.OutputDocumentId).HasColumnName("output_document_id");
             entity.Property(e => e.Serie)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("serie");
@@ -277,10 +287,18 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Discount)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("discount");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
             entity.Property(e => e.Price)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("sku");
             entity.Property(e => e.SubTotal)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("sub_total");
@@ -310,16 +328,17 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Credit).HasColumnName("credit");
             entity.Property(e => e.Date)
-                .HasColumnType("date")
+                .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.DateTrans)
-                .HasColumnType("date")
+                .HasColumnType("datetime")
                 .HasColumnName("date_trans");
             entity.Property(e => e.DocumentId).HasColumnName("document_id");
             entity.Property(e => e.Iva)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("iva");
             entity.Property(e => e.NoDoc)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("noDoc");
@@ -370,10 +389,18 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Discount)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("discount");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
             entity.Property(e => e.Price)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("sku");
             entity.Property(e => e.Subtotal)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("subtotal");
@@ -408,6 +435,7 @@ public partial class FerreteriaDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("name");
@@ -417,7 +445,7 @@ public partial class FerreteriaDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__cellar__3213E83FD1566C65");
 
-            entity.ToTable("cellar");
+            entity.ToTable("cellar", tb => tb.HasTrigger("insert_new_cellar_in_inventory"));
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address)
@@ -425,6 +453,7 @@ public partial class FerreteriaDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("address");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(60)
                 .IsUnicode(false)
                 .HasColumnName("name");
@@ -437,29 +466,28 @@ public partial class FerreteriaDbContext : DbContext
             entity.ToTable("cellar_transfer");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CellarDestinationId).HasColumnName("cellar_destination_id");
-            entity.Property(e => e.CellarOriginId).HasColumnName("cellar_origin_id");
             entity.Property(e => e.Date)
                 .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.DateTrans)
                 .HasColumnType("datetime")
                 .HasColumnName("date_trans");
+            entity.Property(e => e.DocumentId).HasColumnName("document_id");
             entity.Property(e => e.NoTransfer)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("no_transfer");
+            entity.Property(e => e.Observation)
+                .HasMaxLength(350)
+                .IsUnicode(false)
+                .HasColumnName("observation");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.CellarDestination).WithMany(p => p.CellarTransferCellarDestinations)
-                .HasForeignKey(d => d.CellarDestinationId)
+            entity.HasOne(d => d.Document).WithMany(p => p.CellarTransfers)
+                .HasForeignKey(d => d.DocumentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_cellar_dest_id");
-
-            entity.HasOne(d => d.CellarOrigin).WithMany(p => p.CellarTransferCellarOrigins)
-                .HasForeignKey(d => d.CellarOriginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_cellar_origin_id");
+                .HasConstraintName("fk_cellar_trans_document_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.CellarTransfers)
                 .HasForeignKey(d => d.UserId)
@@ -474,14 +502,31 @@ public partial class FerreteriaDbContext : DbContext
             entity.ToTable("cellar_transfer_det");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CellarDestinationId).HasColumnName("cellar_destination_id");
+            entity.Property(e => e.CellarOriginId).HasColumnName("cellar_origin_id");
             entity.Property(e => e.CellarTransId).HasColumnName("cellar_trans_id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Units).HasColumnName("units");
+
+            entity.HasOne(d => d.CellarDestination).WithMany(p => p.CellarTransferDetCellarDestinations)
+                .HasForeignKey(d => d.CellarDestinationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_cellar_trans_det_cellar_destination");
+
+            entity.HasOne(d => d.CellarOrigin).WithMany(p => p.CellarTransferDetCellarOrigins)
+                .HasForeignKey(d => d.CellarOriginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_cellar_trans_cellar_origin");
 
             entity.HasOne(d => d.CellarTrans).WithMany(p => p.CellarTransferDets)
                 .HasForeignKey(d => d.CellarTransId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cellar_trans_id");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CellarTransferDets)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_cellar_trans_det_product_id");
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -510,10 +555,12 @@ public partial class FerreteriaDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("email");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.Nit)
+                .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("nit");
@@ -549,6 +596,7 @@ public partial class FerreteriaDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
+                .IsRequired()
                 .HasMaxLength(250)
                 .IsUnicode(false)
                 .HasColumnName("description");
@@ -573,6 +621,7 @@ public partial class FerreteriaDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
+                .IsRequired()
                 .HasMaxLength(250)
                 .IsUnicode(false)
                 .HasColumnName("description");
@@ -585,34 +634,19 @@ public partial class FerreteriaDbContext : DbContext
             entity.ToTable("inventory");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.BuyId).HasColumnName("buy_id");
             entity.Property(e => e.CellarId).HasColumnName("cellar_id");
-            entity.Property(e => e.CellarTransId).HasColumnName("cellar_trans_id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
-            entity.Property(e => e.SaleId).HasColumnName("sale_id");
             entity.Property(e => e.Units).HasColumnName("units");
-
-            entity.HasOne(d => d.Buy).WithMany(p => p.Inventories)
-                .HasForeignKey(d => d.BuyId)
-                .HasConstraintName("fk_inv_buy_id");
 
             entity.HasOne(d => d.Cellar).WithMany(p => p.Inventories)
                 .HasForeignKey(d => d.CellarId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cellar_id");
 
-            entity.HasOne(d => d.CellarTrans).WithMany(p => p.Inventories)
-                .HasForeignKey(d => d.CellarTransId)
-                .HasConstraintName("fk_cellarTrans_id");
-
             entity.HasOne(d => d.Product).WithMany(p => p.Inventories)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_product_id");
-
-            entity.HasOne(d => d.Sale).WithMany(p => p.Inventories)
-                .HasForeignKey(d => d.SaleId)
-                .HasConstraintName("fk_inv_sale_id");
         });
 
         modelBuilder.Entity<Measure>(entity =>
@@ -655,7 +689,7 @@ public partial class FerreteriaDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("pk_id_product");
 
-            entity.ToTable("product");
+            entity.ToTable("product", tb => tb.HasTrigger("insert_new_product_in_inventory"));
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.BrandId).HasColumnName("brand_id");
@@ -772,7 +806,7 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.CreditDays).HasColumnName("credit_days");
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.Date)
-                .HasColumnType("date")
+                .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.DateTrans)
                 .HasColumnType("datetime")
@@ -835,11 +869,19 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Discount)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("discount");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
             entity.Property(e => e.Price)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.SaleId).HasColumnName("sale_id");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("sku");
             entity.Property(e => e.SubTotal)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("sub_total");
@@ -936,11 +978,19 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Discount)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("discount");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
             entity.Property(e => e.Price)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.SaleOrderId).HasColumnName("sale_order_id");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("sku");
             entity.Property(e => e.SubTotal)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("sub_total");
@@ -971,16 +1021,17 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Credit).HasColumnName("credit");
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.Date)
-                .HasColumnType("date")
+                .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.DateTrans)
-                .HasColumnType("date")
+                .HasColumnType("datetime")
                 .HasColumnName("date_trans");
             entity.Property(e => e.DocumentId).HasColumnName("document_id");
             entity.Property(e => e.Iva)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("iva");
             entity.Property(e => e.NoDoc)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("noDoc");
@@ -1028,12 +1079,20 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Discount)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("discount");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
             entity.Property(e => e.Price)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.SaleId).HasColumnName("sale_id");
             entity.Property(e => e.SaleReturnId).HasColumnName("sale_return_id");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("sku");
             entity.Property(e => e.Subtotal)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("subtotal");
@@ -1069,10 +1128,12 @@ public partial class FerreteriaDbContext : DbContext
                 .HasColumnName("address");
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.Nit)
+                .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("nit");
@@ -1114,7 +1175,10 @@ public partial class FerreteriaDbContext : DbContext
             entity.Property(e => e.Date)
                 .HasColumnType("datetime")
                 .HasColumnName("date");
-            entity.Property(e => e.NoDoc).HasColumnName("noDoc");
+            entity.Property(e => e.NoDoc)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("noDoc");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.SaleId).HasColumnName("sale_id");
             entity.Property(e => e.SaleReturnId).HasColumnName("sale_return_id");
@@ -1165,6 +1229,35 @@ public partial class FerreteriaDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__users__3213E83F10224B92");
+
+            entity.ToTable("users");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("email");
+            entity.Property(e => e.Name)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("name");
+            entity.Property(e => e.Password)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("password");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(9)
+                .IsUnicode(false)
+                .HasColumnName("phone");
+            entity.Property(e => e.Username)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("username");
         });
 
         modelBuilder.Entity<UserSy>(entity =>

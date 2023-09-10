@@ -51,7 +51,10 @@ namespace SalesProject.Domain.Core
             return await _genericProductBrandRepo.GetAllAsync();
         }
 
-        
+        public async Task<IQueryable<Brand>> GetAllWithPagingAsync()
+        {
+            return await _genericProductBrandRepo.GetAllAsync();
+        }
         #endregion
     }
 }

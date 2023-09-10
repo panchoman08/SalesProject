@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.product.brand;
 using SalesProject.Application.DTO.product.product;
 using SalesProject.Application.Interface;
@@ -141,6 +142,25 @@ namespace SalesProject.Application.Main
             return response;
         }
 
+        public async Task<Response<PagedList<ProductBrandDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParametersDTO)
+        {
+            var response = new Response<PagedList<ProductBrandDTO>>();
+            try
+            {
+                var brands = await _productBrandDomain.GetAllWithPagingAsync();
+                IEnumerable<ProductBrandDTO> brandsIE = _mapper.Map<IEnumerable<ProductBrandDTO>>(brands);
+
+                response.Data = PagedList<ProductBrandDTO>.ToPagedList(brandsIE, paginationParametersDTO.PageNumber, paginationParametersDTO.PageSize);
+                response.IsSuccess = true;
+                response.Message = "Query successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Message= ex.Message;   
+            }
+
+            return response;
+        }
 
         #endregion
 

@@ -23,19 +23,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Infraestructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Infraestructure.Repository", "SalesProject.Infraestructure.Repository\SalesProject.Infraestructure.Repository.csproj", "{B8E6BD13-36B6-4A87-845D-124836217771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Domain.Interface", "SalesProject.Domain.Interface\SalesProject.Domain.Interface.csproj", "{B788C6B6-E1F6-45F0-9289-2DC413027632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Domain.Interface", "SalesProject.Domain.Interface\SalesProject.Domain.Interface.csproj", "{B788C6B6-E1F6-45F0-9289-2DC413027632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Domain.Core", "SalesProject.Domain.Core\SalesProject.Domain.Core.csproj", "{D1A7F23C-D669-437C-A40A-28DE52C614B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Domain.Core", "SalesProject.Domain.Core\SalesProject.Domain.Core.csproj", "{D1A7F23C-D669-437C-A40A-28DE52C614B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Application.DTO", "SalesProject.Application.DTO\SalesProject.Application.DTO.csproj", "{8D25FDA4-0A83-4FF9-B896-D4FA464109B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Application.DTO", "SalesProject.Application.DTO\SalesProject.Application.DTO.csproj", "{8D25FDA4-0A83-4FF9-B896-D4FA464109B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Application.Interface", "SalesProject.Application.Interface\SalesProject.Application.Interface.csproj", "{0CA9D463-62A2-4E4D-8EB9-BCFBB10F94D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Application.Interface", "SalesProject.Application.Interface\SalesProject.Application.Interface.csproj", "{0CA9D463-62A2-4E4D-8EB9-BCFBB10F94D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Application.Main", "SalesProject.Application.Main\SalesProject.Application.Main.csproj", "{8750245D-00B6-4120-ABAB-F3373B15EC01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Application.Main", "SalesProject.Application.Main\SalesProject.Application.Main.csproj", "{8750245D-00B6-4120-ABAB-F3373B15EC01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Transversal.Mapper", "SalesProject.Transversal.Mapper\SalesProject.Transversal.Mapper.csproj", "{854C3B23-746D-4BED-A480-D7C42B9E8168}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Transversal.Mapper", "SalesProject.Transversal.Mapper\SalesProject.Transversal.Mapper.csproj", "{854C3B23-746D-4BED-A480-D7C42B9E8168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProject.Services.WebApi", "SalesProject.Services.WebApi\SalesProject.Services.WebApi.csproj", "{DD26C1A2-092F-4E36-9C1E-DCB5939A7CEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProject.Services.WebApi", "SalesProject.Services.WebApi\SalesProject.Services.WebApi.csproj", "{DD26C1A2-092F-4E36-9C1E-DCB5939A7CEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

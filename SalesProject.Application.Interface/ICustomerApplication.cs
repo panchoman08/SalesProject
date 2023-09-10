@@ -1,6 +1,6 @@
 ﻿using SalesProject.Application.DTO.customer.customer;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Transversal.Common;
-using System.Threading.Tasks;
 
 namespace SalesProject.Application.Interface
 {
@@ -14,6 +14,7 @@ namespace SalesProject.Application.Interface
         Task<Response<CustomerDTO>> GetByNameAsync(string name);
         Task<Response<IEnumerable<CustomerDTO>>> GetAllTthatContainsNameAsync(string name);
         Task<Response<IEnumerable<CustomerDTO>>> GetAllAsync();
+        Task<Response<PagedList<CustomerDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParameters);
         #endregion
     }
 }

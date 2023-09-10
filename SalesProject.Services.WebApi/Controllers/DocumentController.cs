@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json;
 using SalesProject.Application.DTO.document.document;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.Interface;
 using SalesProject.Transversal.Common;
+using System.Formats.Asn1;
 
 namespace SalesProject.Services.WebApi.Controllers
 {
@@ -12,13 +15,13 @@ namespace SalesProject.Services.WebApi.Controllers
     {
         private readonly IDocumentApplication _documentApplication;
 
-        public DocumentController(IDocumentApplication documentApplication) 
+        public DocumentController(IDocumentApplication documentApplication)
         {
             _documentApplication = documentApplication;
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<DocumentDTO>> GetById([FromRoute]int id)
+        public async Task<ActionResult<DocumentDTO>> GetById([FromRoute] int id)
         {
             var document = await _documentApplication.GetByIdAsync(id);
 
@@ -75,6 +78,44 @@ namespace SalesProject.Services.WebApi.Controllers
             {
                 return BadRequest(new ResponseError(documents.Message));
             }
+
+            return Ok(documents.Data);
+        }
+
+        [HttpGet("allByDocumentType/{name}")]
+        public async Task<ActionResult<List<DocumentDTO>>> GetByDocumentType([FromRoute] string name)
+        {
+            var documents = await _documentApplication.GetAllByDocumentTypeAsync(name);
+
+            if (!documents.IsSuccess)
+            {
+                return BadRequest(new ResponseError(documents.Message));
+            }
+
+            return Ok(documents.Data);
+        }
+        
+
+        [HttpGet("allWithPaging")]
+        public async Task<ActionResult<PagedList<DocumentDTO>>> GetAllWithPaging([FromQuery] PaginationParametersDTO paginationParametersDTO)
+        {
+            var documents = await _documentApplication.GetAllWithPagingAsync(paginationParametersDTO);
+
+            if (!documents.IsSuccess)
+            {
+                return BadRequest(new ResponseError(documents.Message));
+            }
+
+            var metadata = new
+            {
+                documents.Data.TotalCount,
+                documents.Data.PageSize,
+                documents.Data.CurrentPage,
+                documents.Data.HasNext,
+                documents.Data.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
             return Ok(documents.Data);
         }

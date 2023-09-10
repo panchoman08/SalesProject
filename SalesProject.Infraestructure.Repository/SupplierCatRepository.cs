@@ -21,10 +21,12 @@ namespace SalesProject.Infraestructure.Repository
         }
         public async Task<bool> UpdateAsync(int id, SupplierCat obj)
         {
-            var update = _context.Update(obj);
-            await _context.SaveChangesAsync();
+            var category = await _context.SupplierCats.SingleOrDefaultAsync(x => x.Id == id);
 
-            return update != null;
+            category.Name = obj.Name;
+            var save = await _context.SaveChangesAsync();
+
+            return save > 0;
         }
         public async Task<bool> DeleteAsync(int id)
         {

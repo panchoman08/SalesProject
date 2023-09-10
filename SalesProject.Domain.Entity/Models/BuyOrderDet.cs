@@ -11,6 +11,10 @@ public partial class BuyOrderDet
 
     public int ProductId { get; set; }
 
+    public string Sku { get; set; }
+
+    public string Name { get; set; }
+
     public int? CellarId { get; set; }
 
     public decimal? Price { get; set; }
@@ -21,9 +25,9 @@ public partial class BuyOrderDet
 
     public decimal? SubTotal { get; set; }
 
-    public virtual BuyOrder BuyOrder { get; set; } = null!;
+    public virtual BuyOrder BuyOrder { get; set; }
 
-    public virtual Cellar? Cellar { get; set; }
+    public virtual Cellar Cellar { get; set; }
 
-    public virtual Product Product { get; set; } = null!;
+    public virtual Product Product { get; set; }
 }

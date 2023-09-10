@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SalesProject.Application.DTO.customer;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.supplier.supplier;
 using SalesProject.Application.Interface;
 using SalesProject.Domain.Entity.Models;
@@ -93,6 +94,26 @@ namespace SalesProject.Application.Main
             return response;
         }
 
+        public async Task<Response<PagedList<SupplierDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParametersDTO)
+        {
+            var response = new Response<PagedList<SupplierDTO>>();
+            try
+            {
+                var suppliers = await _supplierDomain.GetAllWithPagingAsync();
+                IEnumerable<SupplierDTO> suppliersIE = _mapper.Map<IEnumerable<SupplierDTO>>(suppliers);
+
+                response.Data = PagedList<SupplierDTO>.ToPagedList(suppliersIE, paginationParametersDTO.PageNumber, paginationParametersDTO.PageSize);
+                response.IsSuccess = true;
+                response.Message = "Query successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"{ex.Message} \n {ex.InnerException}";
+            }
+
+            return response;
+        }
+
         public async Task<Response<IEnumerable<SupplierDTO>>> GetAllTthatContainsNameAsync(string name)
         {
             var response = new Response<IEnumerable<SupplierDTO>>();
@@ -136,6 +157,26 @@ namespace SalesProject.Application.Main
                 response.Data = _mapper.Map<SupplierDTO>(supplier);
                 response.IsSuccess = true;
                 response.Message = "Query successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<Response<IEnumerable<SupplierDTO>>> GetAllTthatContainsNitAsync(string nit)
+        {
+            var response = new Response<IEnumerable<SupplierDTO>>();
+            try
+            {
+                var suppliers = await _supplierDomain.GetAllThatContainsNitAsync(nit);
+                response.Data = _mapper.Map<IEnumerable<SupplierDTO>>(suppliers);
+                if (response.Data != null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Query successfully.";
+                }
             }
             catch (Exception ex)
             {

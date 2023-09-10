@@ -87,7 +87,7 @@ namespace SalesProject.Services.WebApi.Controllers
                 return BadRequest(new ResponseError(insert.Message));
             }
 
-            return Ok(insert.Data);
+            return Ok();
         }
 
         [HttpPut("{id:int}")]
@@ -95,7 +95,7 @@ namespace SalesProject.Services.WebApi.Controllers
         {
             var supplierCat = await _supplierCatApplication.GetByIdAsync(id);
 
-            if (supplierCat != null)
+            if (supplierCat == null)
             {
                 return NotFound(new ResponseError("The supplier category id was not found."));
             }
@@ -107,7 +107,7 @@ namespace SalesProject.Services.WebApi.Controllers
                 return BadRequest(new ResponseError(update.Message));
             }
 
-            return Ok(update.Data);
+            return Ok();
         }
 
         [HttpDelete("{id:int}")]
@@ -115,7 +115,7 @@ namespace SalesProject.Services.WebApi.Controllers
         {
             var supplierCat = await _supplierCatApplication.GetByIdAsync(id);
 
-            if (supplierCat != null)
+            if (supplierCat == null)
             {
                 return NotFound(new ResponseError("The supplier category id was not found."));
             }
@@ -127,7 +127,7 @@ namespace SalesProject.Services.WebApi.Controllers
                 return BadRequest(new ResponseError(delete.Message));
             }
 
-            return Ok(delete.Data);
+            return Ok();
         }
     }
 }

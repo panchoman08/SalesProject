@@ -17,6 +17,7 @@ namespace SalesProject.Domain.Interface
         Task<Brand> GetByNameAsync(string name);
         Task<IEnumerable<Brand>> GetAllThatContainsNameAsync(string name);
         Task<IQueryable<Brand>> GetAllAsync();
+        Task<IQueryable<Brand>> GetAllWithPagingAsync();
         #endregion
     }
 }

@@ -24,10 +24,22 @@ namespace SalesProject.Infraestructure.Repository
         }
         public async Task<bool> UpdateAsync(int id, Customer obj)
         {
-            var update = _context.Update(obj);
-            await _context.SaveChangesAsync();
+            var customer = await _context.Customers.SingleOrDefaultAsync(x => x.Id == id);
 
-            return update != null;
+            customer.Nit = (!string.IsNullOrEmpty(obj.Nit)) ? obj.Nit : customer.Nit;
+            customer.Cui = (!string.IsNullOrEmpty(obj.Cui)) ? obj.Cui : customer.Cui;
+            customer.Name = (!string.IsNullOrEmpty(obj.Name)) ? obj.Name : customer.Name;
+            customer.Address = (!string.IsNullOrEmpty(obj.Address)) ? obj.Address : customer.Address;
+            customer.Phone = (!string.IsNullOrEmpty(obj.Phone)) ? obj.Phone : customer.Phone;
+            customer.Email = (!string.IsNullOrEmpty(obj.Email)) ? obj.Email : customer.Email;
+            customer.CreditDays = (obj.CreditDays != null) ? obj.CreditDays : customer.CreditDays;
+            customer.CreditLimit = (obj.CreditLimit != null) ? obj.CreditLimit : customer.CreditLimit;
+            customer.Defaulter = obj.Defaulter;
+            customer.CategoryId = customer.CategoryId;
+
+            var save = await _context.SaveChangesAsync();
+
+            return save > 0;
         }
         public async Task<bool> DeleteAsync(int id)
         {

@@ -17,17 +17,17 @@ public partial class Buy
 
     public int? BuyOrderId { get; set; }
 
-    public string NoDoc { get; set; } = null!;
+    public string NoDoc { get; set; }
 
-    public string Serie { get; set; } = null!;
+    public string Serie { get; set; }
 
     public bool? Credit { get; set; }
 
     public int? CreditDays { get; set; }
 
-    public DateTime? DateTrans { get; set; }
+    public DateTime DateTrans { get; set; }
 
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     public decimal? Subtotal { get; set; }
 
@@ -37,19 +37,17 @@ public partial class Buy
 
     public virtual ICollection<BuyDet> BuyDets { get; } = new List<BuyDet>();
 
-    public virtual BuyOrder? BuyOrder { get; set; }
+    public virtual BuyOrder BuyOrder { get; set; }
 
     public virtual ICollection<BuyReturnDet> BuyReturnDets { get; } = new List<BuyReturnDet>();
 
-    public virtual Document Document { get; set; } = null!;
+    public virtual Document Document { get; set; }
 
-    public virtual ICollection<Inventory> Inventories { get; } = new List<Inventory>();
+    public virtual Supplier Supplier { get; set; }
 
-    public virtual Supplier Supplier { get; set; } = null!;
-
-    public virtual TransactionState TransState { get; set; } = null!;
+    public virtual TransactionState TransState { get; set; }
 
     public virtual ICollection<TransactionDetail> TransactionDetails { get; } = new List<TransactionDetail>();
 
-    public virtual UserSy User { get; set; } = null!;
+    public virtual UserSy User { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using SalesProject.Application.DTO.customer.customer;
+﻿using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.product.product;
 using SalesProject.Transversal.Common;
 
@@ -15,7 +15,9 @@ namespace SalesProject.Application.Interface
         Task<Response<ProductDTO>> GetByNameAsync(string name);
         Task<Response<ProductDTO>> GetBySkuAsync(string sku);
         Task<Response<IEnumerable<ProductDTO>>> GetAllTthatContainsNameAsync(string name);
+        Task<Response<IEnumerable<ProductDTO>>> GetAllThatContainsSkuAsync(string sku);
         Task<Response<IEnumerable<ProductDTO>>> GetAllAsync();
+        Task<Response<PagedList<ProductDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParametersDTO);
         #endregion
     }
 }

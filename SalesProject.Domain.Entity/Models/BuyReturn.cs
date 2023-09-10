@@ -15,17 +15,17 @@ public partial class BuyReturn
 
     public int TransStateId { get; set; }
 
-    public string NoDoc { get; set; } = null!;
+    public string NoDoc { get; set; }
 
-    public string? Serie { get; set; }
+    public string Serie { get; set; }
 
     public bool? Credit { get; set; }
 
-    public DateTime? DateTrans { get; set; }
+    public DateTime DateTrans { get; set; }
 
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
-    public string? Observation { get; set; }
+    public string Observation { get; set; }
 
     public decimal? Subtotal { get; set; }
 
@@ -35,11 +35,11 @@ public partial class BuyReturn
 
     public virtual ICollection<BuyReturnDet> BuyReturnDets { get; } = new List<BuyReturnDet>();
 
-    public virtual Document Document { get; set; } = null!;
+    public virtual Document Document { get; set; }
 
-    public virtual Supplier Supplier { get; set; } = null!;
+    public virtual Supplier Supplier { get; set; }
 
     public virtual ICollection<TransactionDetail> TransactionDetails { get; } = new List<TransactionDetail>();
 
-    public virtual UserSy User { get; set; } = null!;
+    public virtual UserSy User { get; set; }
 }

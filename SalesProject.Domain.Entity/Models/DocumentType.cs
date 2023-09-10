@@ -7,7 +7,7 @@ public partial class DocumentType
 {
     public int Id { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string Description { get; set; }
 
     public virtual ICollection<Document> Documents { get; } = new List<Document>();
 }

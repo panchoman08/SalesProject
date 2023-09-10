@@ -43,6 +43,7 @@ namespace SalesProject.Application.Main
             try
             {
                 var cellar = _mapper.Map<Cellar>(obj);
+                cellar.Id = id;
                 response.Data = await _cellarDomain.UpdateAsync(id, cellar);
                 if (response.Data)
                 {
@@ -70,7 +71,7 @@ namespace SalesProject.Application.Main
             }
             catch (Exception ex)
             {
-                response.Message = ex.Message;
+                response.Message = $"{ex.Message}\n {ex.InnerException}";
             }
             return response;
         }

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.product.product;
 using SalesProject.Application.Interface;
 using SalesProject.Domain.Entity.Models;
+using SalesProject.Domain.Entity.Models.pagination;
 using SalesProject.Domain.Interface;
 using SalesProject.Transversal.Common;
 
@@ -69,7 +72,7 @@ namespace SalesProject.Application.Main
             }
             catch (Exception ex)
             {
-                response.Message = ex.Message;
+                response.Message = $"{ex.Message} \n {ex.InnerException}";
             }
             return response;
         }
@@ -154,7 +157,49 @@ namespace SalesProject.Application.Main
             return response;
         }
 
-        
+        public async Task<Response<PagedList<ProductDTO>>> GetAllWithPagingAsync(PaginationParametersDTO paginationParametersDTO)
+        {
+            var response = new Response<PagedList<ProductDTO>>();
+            try
+            {
+                var products = await _productDomain.GetAllWithPagingAsync();
+
+                IEnumerable<ProductDTO> productsIE = _mapper.Map<IEnumerable<ProductDTO>>(await products.ToListAsync());
+
+                response.Data = PagedList<ProductDTO>.ToPagedList(productsIE, paginationParametersDTO.PageNumber, paginationParametersDTO.PageSize);
+                response.IsSuccess = true;
+                response.Message = "Query sucessfully.";
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"{ex.Message}";
+            }
+
+            return response;
+        }
+
+        public async Task<Response<IEnumerable<ProductDTO>>> GetAllThatContainsSkuAsync(string sku)
+        {
+            var response = new Response<IEnumerable<ProductDTO>>();
+            try
+            {
+                var products = await _productDomain.GetAllThatContainsSkuAsync(sku);
+
+                response.Data = _mapper.Map<IEnumerable<ProductDTO>>(products);
+                if (response.Data != null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Query successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
         #endregion
     }
 }

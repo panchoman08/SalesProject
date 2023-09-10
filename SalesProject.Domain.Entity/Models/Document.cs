@@ -9,9 +9,9 @@ public partial class Document
 
     public int DocumentTypeId { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string Description { get; set; }
 
-    public string? Serie { get; set; }
+    public string Serie { get; set; }
 
     public int? InternalCorrelative { get; set; }
 
@@ -23,7 +23,9 @@ public partial class Document
 
     public virtual ICollection<Buy> Buys { get; } = new List<Buy>();
 
-    public virtual DocumentType DocumentType { get; set; } = null!;
+    public virtual ICollection<CellarTransfer> CellarTransfers { get; } = new List<CellarTransfer>();
+
+    public virtual DocumentType DocumentType { get; set; }
 
     public virtual ICollection<SaleOrder> SaleOrderDocuments { get; } = new List<SaleOrder>();
 

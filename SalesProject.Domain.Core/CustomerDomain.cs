@@ -3,6 +3,9 @@ using SalesProject.Domain.Entity;
 using SalesProject.Domain.Entity.Models;
 using SalesProject.Infraestructure.Interface;
 using Microsoft.EntityFrameworkCore;
+using SalesProject.Domain.Entity.Models.pagination;
+using System.Security.Cryptography.X509Certificates;
+using SalesProject.Transversal.Common;
 
 namespace SalesProject.Domain.Core
 {
@@ -45,6 +48,11 @@ namespace SalesProject.Domain.Core
             return await _genericCustomerRepo.GetAllAsync();
         }
 
+        public async Task<IQueryable<Customer>> GetAllWithPagingAsync()
+        {
+            return await _genericCustomerRepo.GetAllAsync();
+        }
+
         public async Task<IEnumerable<Customer>> GetAllTthatContainsNameAsync(string name)
         {
             var customerQueryable = await _genericCustomerRepo.GetAllAsync();
@@ -66,6 +74,5 @@ namespace SalesProject.Domain.Core
             return customer;
         }
 
-        
     }
 }

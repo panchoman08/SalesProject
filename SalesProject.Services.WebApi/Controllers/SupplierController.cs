@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SalesProject.Application.DTO.pagination;
 using SalesProject.Application.DTO.supplier.supplier;
 using SalesProject.Application.Interface;
 using SalesProject.Transversal.Common;
@@ -64,6 +66,30 @@ namespace SalesProject.Services.WebApi.Controllers
             return Ok(suppliers.Data);
         }
 
+        [HttpGet("allWithPaging")]
+        public async Task<ActionResult<PagedList<SupplierDTO>>> GetAllWithPaging([FromQuery] PaginationParametersDTO paginationParametersDTO)
+        {
+            var suppliers = await _supplierApplication.GetAllWithPagingAsync(paginationParametersDTO);
+
+            if (!suppliers.IsSuccess)
+            {
+                return BadRequest(new ResponseError(suppliers.Message));
+            }
+
+            var metadata = new
+            {
+                suppliers.Data.TotalCount,
+                suppliers.Data.PageSize,
+                suppliers.Data.CurrentPage,
+                suppliers.Data.HasNext,
+                suppliers.Data.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            return Ok(suppliers.Data);
+        }
+
         [HttpGet("allThatContainsName/{name}")]
         public async Task<ActionResult<List<SupplierDTO>>> GetAll([FromRoute]string name)
         {
@@ -72,6 +98,19 @@ namespace SalesProject.Services.WebApi.Controllers
             if (!suppliers.IsSuccess)
             {
                 return BadRequest(new ResponseError($"{suppliers.Message}"));
+            }
+
+            return Ok(suppliers.Data);
+        }
+
+        [HttpGet("allThatContainsNit/{nit}")]
+        public async Task<ActionResult<List<SupplierDTO>>> GetAllThatContainsNit(string nit)
+        {
+            var suppliers = await _supplierApplication.GetAllTthatContainsNitAsync(nit);
+
+            if (!suppliers.IsSuccess)
+            {
+                return NotFound(new ResponseError(suppliers.Message));
             }
 
             return Ok(suppliers.Data);

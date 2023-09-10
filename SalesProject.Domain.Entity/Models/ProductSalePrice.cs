@@ -13,7 +13,7 @@ public partial class ProductSalePrice
 
     public decimal? Price { get; set; }
 
-    public virtual CategorySalePrice CatSalePrice { get; set; } = null!;
+    public virtual CategorySalePrice CatSalePrice { get; set; }
 
-    public virtual Product Product { get; set; } = null!;
+    public virtual Product Product { get; set; }
 }

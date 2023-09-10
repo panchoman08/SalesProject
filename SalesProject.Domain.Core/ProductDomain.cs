@@ -45,10 +45,20 @@ namespace SalesProject.Domain.Core
             return await _genericProductRepo.GetAllAsync();
         }
 
+        public async Task<IQueryable<Product>> GetAllWithPagingAsync()
+        {
+            return await _genericProductRepo.GetAllAsync();
+        }
         public async Task<IEnumerable<Product>> GetAllThatContainsNameAsync(string name)
         {
             var products = await _genericProductRepo.GetAllAsync();
             return await products.Where(x => x.Name.Contains(name)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetAllThatContainsSkuAsync(string sku)
+        {
+            var queryable = await _genericProductRepo.GetAllAsync();
+            return await queryable.Where(x => x.Sku.Contains(sku)).ToListAsync();
         }
 
         public async Task<Product> GetBySkuAsync(string sku)
@@ -58,6 +68,9 @@ namespace SalesProject.Domain.Core
 
             return product;
         }
+
+        
+
         #endregion
     }
 }
